@@ -13,7 +13,7 @@ The incremental variant is described in:
   "Real-time model learning using Incremental Sparse Spectrum Gaussian Process 
   Regression."
   Arjan Gijsberts and Giorgio Metta.
-  In Neural Networks Volume 41 2013.
+  In Neural Networks Volume 41, 2013.
 
  Copyright (C) 2011,2020 Arjan Gijsberts <arjan.gijsberts@gmail.com>
 

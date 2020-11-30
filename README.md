@@ -22,7 +22,7 @@ The incremental variant is described in:
 After downloading, you can install `ssgpr` via the [pip](https://pip.pypa.io/en/stable/) package manager with
 
 ```bash
-pip3 install foobar
+pip3 install .
 ```
 
 or if that's not an option directly via `setup.py` with
@@ -30,7 +30,7 @@ or if that's not an option directly via `setup.py` with
 ```bash
 python3 setup.py install --user
 ```
-You'll need `numpy`, `scipy`, and a compiler. Python 2 should also still work.
+Either command will need to be executed from within the base directory. Also, you'll need `numpy`, `scipy`, and a compiler. The scripts seem to install and run fine with Python 2, but there's really no good excuse to use it any longer.
 
 ## Usage
 
@@ -64,7 +64,9 @@ The `--yarp` flag allows saving the model to files that can be read with the [le
 
 * The model can learn multiple outputs jointly at negligible additional cost, but in this case the hyperparameters are the same for all outputs. This makes sense if all outputs behave similarly (e.g., forces in x, y, and z dimensions), but not if the problems are of different nature (e.g., forces versus torques). In the latter case you should just train a different model.
 
-* The log marginal likelihood is non-convex and it's optimization via gradient ascent will therefore result in a *local* optimum. Make sure to choose sensible initial hyperparameters (e.g., via the `guessparams` method) and to experiment with different solvers. 
+* The log marginal likelihood is non-convex and it's optimization via gradient ascent will therefore result in a *local* optimum. Make sure to choose sensible initial hyperparameters (e.g., via the `guessparams` method) and to experiment with different solvers.
+
+* Optimizing the spectral frequencies essentially means optimizing the kernel function to your data. This can allow you to get better performance with fewer projections, but at increased risk of overfitting due to the large number of tunable hyperparameters. Use with care and ideally only if you have plenty of training data.
 
 
 ## Notes
