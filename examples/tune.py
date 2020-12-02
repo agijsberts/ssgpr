@@ -245,7 +245,7 @@ def main():
 
     # set hyperparameters if given
     if args.params is not None:
-        ssgpr.setparams(list(eval(args.params)))
+        ssgpr.setparams(args.params)
 
     # optimize hyperparameters
     if args.optimize:

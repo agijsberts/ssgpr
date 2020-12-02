@@ -374,7 +374,9 @@ class LinearGPR(object):
         self.L = numpy.dot(self.Phi.T, self.Phi)
         idx = numpy.diag_indices(self.Phi.shape[1])
         self.L[idx] += sigma_n2
+
         self.up = 0
+
         self.L, info = dpotrf(self.L,lower=self.up,clean=1,overwrite_a=1)
 
         self.B = numpy.dot(self.Phi.T, self.Y)
@@ -382,9 +384,8 @@ class LinearGPR(object):
                                   self.B, trans=1, overwrite_b=1)
         assert info == 0, 'scipy.linalg.lapack.dgetrs(L, B)'
 
-        # former should be faster, but isn't on small datasets
-        #self.w, info = dgetrs(self.L,numpy.arange(self.L.shape[0]), LPhiy, trans=0, overwrite_b=0)
-        self.W = cho_solve((self.L, self.up), self.B)
+        self.W, info = dgetrs(self.L, numpy.arange(self.L.shape[0]), self.LPhiY, trans=0, overwrite_b=0)
+        assert info == 0, 'scipy.linalg.lapack.dgetrs(L, LPhiY)'
 
         self.lml = -0.5 * ((1. / (sigma_n2)) * (inner1d(self.Y.T, self.Y.T) - inner1d(self.LPhiY.T, self.LPhiY.T)) + 
                            (m - n) * numpy.log(sigma_n2) + m * numpy.log(2. * numpy.pi)) - \
