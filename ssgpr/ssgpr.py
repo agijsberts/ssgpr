@@ -473,7 +473,7 @@ class LinearGPR(object):
             options['ftol'] = ftol
 
         if gtol is not None:
-            options['gtol'] = ftol
+            options['gtol'] = gtol
 
         if maxFunEvals is not None:
             options['maxfun'] = maxFunEvals
